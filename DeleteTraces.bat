@@ -1,9 +1,20 @@
 @echo off
-call :main
+setlocal
+  set WIM_TWEAK_TOOL=%~dp0..\install_wim_tweak.exe
+  set CCLEANER_TOOL=%~dp0..\CCleaner\CCleaner.exe
+  call :main
+endlocal
 goto :eof
 
 :main
 setlocal enabledelayedexpansion
+  
+  call :CheckPrerequisites
+  if "%result%"=="false" (
+    echo [Error] At least some of the needed tools is not available - aborting!
+    endlocal
+    goto :eof
+  )
   
   call :EncryptPagingFile
   call :BlockMicrosoftLogon
@@ -53,9 +64,19 @@ setlocal enabledelayedexpansion
   endlocal
 goto :eof
 
+:CheckPrerequisites
+setlocal
+  set result=true
+  if not exist "%WIM_TWEAK_TOOL%" (
+    echo [Warning] Wim Tweak Tool not found at %WIM_TWEAK_TOOL%
+    set result=false
+  )
+endlocal && set result=%result%
+goto :eof
+
 :DisplayTitle
   title %~1
-  echo %~1
+  echo [Info] %~1
 goto :eof
 
 :TurnOffUnneededScheduledTasks
@@ -185,7 +206,7 @@ goto :eof
 goto :eof
 
 :RunCCleaner
-  "D:\_COPYAPPS\CCleaner\CCleaner.exe" /AUTO
+  "%CCLEANER_TOOL%" /AUTO
 goto :eof
 
 :CleanEventLogs
@@ -291,7 +312,7 @@ setlocal
   set component=%~1
   set display=%~2
   call :DisplayTitle "Removing Package '%display%'"
-  "%~dp0.\install_wim_tweak.exe" /o /c "Microsoft-%component%" /r >NUL 2>&1
+  "%WIM_TWEAK_TOOL%" /o /c "Microsoft-%component%" /r >NUL 2>&1
 endlocal
 goto :eof
 
