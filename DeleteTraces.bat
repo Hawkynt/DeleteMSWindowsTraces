@@ -18,6 +18,7 @@ setlocal enabledelayedexpansion
   
   call :EncryptPagingFile
   call :BlockMicrosoftLogon
+  call :DisableHelpStickers
   call :DisableSearchIndex
   call :DisableCortanaSearchIndex
   call :RemoveEdge
@@ -256,6 +257,11 @@ goto :eof
   reg add "HKLM\Software\Policies\Microsoft\Windows\SettingSync" /v DisableSettingSync /t REG_DWORD /d 2 /f >NUL 2>&1
   reg add "HKLM\Software\Policies\Microsoft\Windows\SettingSync" /v DisableSettingSyncUserOverride /t REG_DWORD /d 1 /f >NUL 2>&1
   del /F /Q "%SystemRoot%\System32\Tasks\Microsoft\Windows\SettingSync\*" >NUL 2>&1
+goto :eof
+
+:DisableHelpStickers
+  call :DisplayTitle "Disabling Help Stickers"
+  reg add "HKLM\Software\Policies\Microsoft\Windows\EdgeUI" /v DisableHelpSticker /t REG_DWORD /d 1 /f >NUL 2>&1
 goto :eof
 
 :DeleteMRU
