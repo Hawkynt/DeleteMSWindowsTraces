@@ -2,29 +2,52 @@ name: CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [main, master]
   pull_request:
-    branches: [ master ]
-  workflow_call:
+    branches: [main, master]
+  # release.yml can call this via `uses: ./.github/workflows/ci.yml`
+  # so releases run the exact same matrix as per-PR CI.
+  workflow_call: {}
+
+# ---------------------------------------------------------------------------
+# Toolchain-agnostic CI (from ci.generic.yml) filled in for a Windows batch
+# repo. There is no compiler for batch files, so "build" is a no-op and the
+# test suite is Pester: static analysis of DeleteTraces.bat (encoding, line
+# endings, label/call/goto resolution, setlocal scoping) runs on BOTH OSes;
+# the cmd.exe smoke test self-skips where no cmd.exe exists.
+# ---------------------------------------------------------------------------
+
+# Force JavaScript-based actions to run on Node 24 instead of the deprecated Node 20 ahead of
+# the 2026-06-16 hard cutover, until we bump each action to a Node-24-native major version.
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
 
 jobs:
   test:
-    name: Static analysis & smoke tests
-    runs-on: windows-latest
+    name: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0                          # version.pl needs full history
 
-      - name: Run Pester test suite
+      - name: Install Pester
         shell: pwsh
-        run: |
-          Install-Module Pester -MinimumVersion 5.5 -Force -SkipPublisherCheck -Scope CurrentUser
-          Invoke-Pester -Path tests -Output Detailed -CI
+        run: Install-Module Pester -MinimumVersion 5.5 -Force -SkipPublisherCheck -Scope CurrentUser
+
+      # This tier is REQUIRED -- do NOT add continue-on-error here.
+      - name: Test
+        shell: pwsh
+        run: Invoke-Pester -Path tests -Output Detailed -CI
 
       - name: Publish test results
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: test-results
+          name: test-results-${{ matrix.os }}
           path: testResults.xml
           if-no-files-found: ignore

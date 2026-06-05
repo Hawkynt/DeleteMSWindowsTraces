@@ -104,8 +104,9 @@ Describe 'DeleteTraces.bat internal consistency' {
   }
 }
 
-Describe 'DeleteTraces.bat behavior' {
+Describe 'DeleteTraces.bat behavior' -Skip:($env:OS -ne 'Windows_NT') {
 
+  # needs a real cmd.exe, so this block self-skips on non-Windows runners
   Context 'Given the wim tweak tool is not present next to the script' {
 
     BeforeAll {
