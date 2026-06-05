@@ -1,4 +1,4 @@
-# 🧹 DeleteMSWindowsTraces
+# DeleteMSWindowsTraces
 
 [![License](https://img.shields.io/github/license/Hawkynt/DeleteMSWindowsTraces)](https://github.com/Hawkynt/DeleteMSWindowsTraces/blob/master/LICENSE)
 [![Language](https://img.shields.io/github/languages/top/Hawkynt/DeleteMSWindowsTraces?color=8957D5)](https://github.com/Hawkynt/DeleteMSWindowsTraces)
@@ -14,90 +14,46 @@
 ![Repo Size](https://img.shields.io/github/repo-size/Hawkynt/DeleteMSWindowsTraces?color=FF9800)
 
 [![Release](https://img.shields.io/github/v/release/Hawkynt/DeleteMSWindowsTraces?sort=semver)](https://github.com/Hawkynt/DeleteMSWindowsTraces/releases/latest)
+[![Nightly](https://img.shields.io/github/v/release/Hawkynt/DeleteMSWindowsTraces?include_prereleases=true&sort=date&label=nightly&color=FF9800)](https://github.com/Hawkynt/DeleteMSWindowsTraces/releases)
 [![Downloads](https://img.shields.io/github/downloads/Hawkynt/DeleteMSWindowsTraces/total)](https://github.com/Hawkynt/DeleteMSWindowsTraces/releases)
 
-> Tired of Windows phoning home and remembering everything you do? 🕵️ This script removes all the crap that tracks what you do under Windows - telemetry, traces, MRUs, bloatware and more - in one go.
+> A single Windows batch script that removes the crap tracking what you do under Windows — it disables telemetry and data collection, strips bundled bloatware like Edge, Cortana, Maps and Bing apps, and wipes the usage traces (temp files, MRUs, jumplists, prefetch, event logs, recycle bins) that accumulate during daily work; useful when you want a machine to stop phoning home and to stop remembering, without installing yet another cleaner suite.
 
-## 🤔 What is it?
+## Install
 
-DeleteMSWindowsTraces is a plain Windows batch script that hardens a Windows installation against Microsoft's data collection and wipes the usage traces that accumulate during daily work. No installation, no dependencies on exotic runtimes - just `cmd.exe` doing the dirty work.
+Download `DeleteTraces.bat` from the [latest release](https://github.com/Hawkynt/DeleteMSWindowsTraces/releases/latest) (or a [nightly](https://github.com/Hawkynt/DeleteMSWindowsTraces/releases)), or clone the repository. Place `install_wim_tweak.exe` in the folder **above** the script — the script aborts safely when it is missing.
 
-## ✨ Features
+## Usage
 
-### 🔇 Silence Telemetry & Data Collection
+Run from an elevated command prompt (registry, services and scheduled tasks are modified):
 
-* Disables Windows Error Reporting, Customer Experience Improvement Program and Application Experience tasks
-* Tweaks Defender settings to stop SpyNet reporting and sample submission
-* Turns off Windows Tips, Spotlight and consumer features
-* Blocks Microsoft account logons and setting synchronization
-* Encrypts the paging file so swapped-out secrets stay secret
-
-### 🗑️ Remove Bloatware
-
-* Edge / Internet Explorer (executables get neutralized too)
-* Cortana including its firewall-blocked SearchUI
-* Maps, Sticky Notes, Bing apps (News, Weather), Get Help / Contact Support
-* Hello Face, Biometrics, Geolocation, Quick Assist, Retail Demo and Troubleshooting packages
-* Disables the search indexer and a pile of unneeded scheduled tasks
-
-### 🧽 Wipe Usage Traces
-
-* Temp folders, crash dumps and prefetch files
-* Recent files, jumplists and Office MRUs for **every** user profile
-* Typed addresses, Run dialog history and Visual Studio MRU lists
-* Recycle bins on all drives, all event logs and the icon caches
-
-## 📋 Prerequisites
-
-* Administrator privileges (registry, services and scheduled tasks are modified)
-* `install_wim_tweak.exe` located in the **parent folder** of the script - the script aborts safely when it is missing
-* Optional: `CCleaner\CCleaner.exe` in the parent folder if you re-enable the CCleaner step
-
-## 🚀 Usage
-
-1. Download `DeleteTraces.bat` from the [latest release](https://github.com/Hawkynt/DeleteMSWindowsTraces/releases/latest) or clone the repository.
-2. Place `install_wim_tweak.exe` in the folder **above** the script.
-3. Run from an elevated command prompt:
-
-   ```batch
-   DeleteTraces.bat
-   ```
-
-The script announces every action it takes with an `[Info]` line and skips anything that is not present on your system.
-
-## ⚠️ Warning
-
-This script is intentionally destructive:
-
-* It permanently deletes temp files, MRU lists, recycle bin contents and **all event logs**.
-* It removes Windows components - some of them are hard to get back without reinstalling.
-* It restarts `explorer.exe` to flush the icon caches.
-* Encrypting the paging file requires a reboot to take effect.
-
-Run it on systems you own and understand. There is no undo. 💣
-
-## 🧪 Tests
-
-The repository ships a [Pester](https://pester.dev/) test suite that statically analyzes the batch file (labels, call targets, scoping, encoding) and smoke-tests the prerequisite check:
-
-```powershell
-Invoke-Pester -Path tests
+```text
+DeleteTraces.bat
 ```
 
-The same suite runs in CI on every push and gates every release.
+Every action announces itself with an `[Info]` line; anything not present on your system is skipped.
 
-## 🤝 Contributing
+**Warning** — this script is intentionally destructive: it permanently deletes temp files, MRU lists, recycle bin contents and **all event logs**, removes Windows components that are hard to get back without reinstalling, restarts `explorer.exe` to flush the icon caches, and encrypting the paging file requires a reboot to take effect. Run it on systems you own and understand; there is no undo.
 
-Contributions are welcome! Feel free to open an issue or submit a pull request. Some ideas for improvement:
+## Features
 
-* Make the trace categories selectable via command line switches
-* Add support for newer Windows 11 telemetry endpoints
-* Detect localized administrator group names automatically
+- **Silences telemetry and data collection** — Windows Error Reporting, Customer Experience Improvement Program, Application Experience tasks, Defender SpyNet reporting and sample submission, Windows Tips/Spotlight/consumer features
+- **Blocks Microsoft account logons** and setting synchronization, and encrypts the paging file so swapped-out secrets stay secret
+- **Removes bloatware** — Edge / Internet Explorer (executables get neutralized too), Cortana (including a firewall block for SearchUI), Maps, Sticky Notes, Bing apps, Get Help / Contact Support, Hello Face, Biometrics, Geolocation, Quick Assist, Retail Demo and Troubleshooting packages
+- **Disables the search indexer** and a pile of unneeded scheduled tasks
+- **Wipes usage traces** for **every** user profile — temp folders, crash dumps, prefetch files, recent files, jumplists, Office MRUs, typed addresses, Run dialog history, Visual Studio MRU lists, recycle bins on all drives, all event logs and the icon caches
+- Optional: re-enable the commented-out CCleaner step if `CCleaner\CCleaner.exe` sits in the parent folder
 
-## 📜 License
+## Building
 
-This project is licensed under the GPL-3.0 license. See the [LICENSE](LICENSE) file for details.
+There is nothing to compile — the batch file is the artifact. The [Pester](https://pester.dev/) test suite statically analyzes the script (encoding, line endings, label/call/goto resolution, `setlocal` scoping) and smoke-tests the prerequisite abort path:
 
-## 🙏 Credits
+```bash
+pwsh -Command "Invoke-Pester -Path tests"
+```
 
-* **Author:** Hawkynt
+The same suite runs in CI on every push and gates every release; see [.github/workflows](.github/workflows/README.md) for the full pipeline.
+
+## License
+
+Licensed under GPL-3.0 — see [LICENSE](LICENSE).
