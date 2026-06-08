@@ -14,7 +14,7 @@
 ![Repo Size](https://img.shields.io/github/repo-size/Hawkynt/DeleteMSWindowsTraces?color=FF9800)
 
 [![Release](https://img.shields.io/github/v/release/Hawkynt/DeleteMSWindowsTraces?sort=semver)](https://github.com/Hawkynt/DeleteMSWindowsTraces/releases/latest)
-[![Nightly](https://img.shields.io/github/v/release/Hawkynt/DeleteMSWindowsTraces?include_prereleases=true&sort=date&label=nightly&color=FF9800)](https://github.com/Hawkynt/DeleteMSWindowsTraces/releases)
+[![Nightly](https://img.shields.io/github/v/release/Hawkynt/DeleteMSWindowsTraces?include_prereleases&sort=date&label=nightly&color=FF9800)](https://github.com/Hawkynt/DeleteMSWindowsTraces/releases)
 [![Downloads](https://img.shields.io/github/downloads/Hawkynt/DeleteMSWindowsTraces/total)](https://github.com/Hawkynt/DeleteMSWindowsTraces/releases)
 
 > A single Windows batch script that removes the crap tracking what you do under Windows — it disables telemetry and data collection, strips bundled bloatware like Edge, Cortana, Maps and Bing apps, and wipes the usage traces (temp files, MRUs, jumplists, prefetch, event logs, recycle bins) that accumulate during daily work; useful when you want a machine to stop phoning home and to stop remembering, without installing yet another cleaner suite.
