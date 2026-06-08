@@ -13,7 +13,7 @@
 ![Code Size](https://img.shields.io/github/languages/code-size/Hawkynt/DeleteMSWindowsTraces?color=4CAF50)
 ![Repo Size](https://img.shields.io/github/repo-size/Hawkynt/DeleteMSWindowsTraces?color=FF9800)
 
-[![Release](https://img.shields.io/github/v/release/Hawkynt/DeleteMSWindowsTraces?sort=semver)](https://github.com/Hawkynt/DeleteMSWindowsTraces/releases/latest)
+[![Release](https://img.shields.io/github/v/release/Hawkynt/DeleteMSWindowsTraces)](https://github.com/Hawkynt/DeleteMSWindowsTraces/releases/latest)
 [![Nightly](https://img.shields.io/github/v/release/Hawkynt/DeleteMSWindowsTraces?include_prereleases&sort=date&label=nightly&color=FF9800)](https://github.com/Hawkynt/DeleteMSWindowsTraces/releases)
 [![Downloads](https://img.shields.io/github/downloads/Hawkynt/DeleteMSWindowsTraces/total)](https://github.com/Hawkynt/DeleteMSWindowsTraces/releases)
 
