@@ -19,11 +19,31 @@
 
 > A single Windows batch script that removes the crap tracking what you do under Windows — it disables telemetry and data collection, strips bundled bloatware like Edge, Cortana, Maps and Bing apps, and wipes the usage traces (temp files, MRUs, jumplists, prefetch, event logs, recycle bins) that accumulate during daily work; useful when you want a machine to stop phoning home and to stop remembering, without installing yet another cleaner suite.
 
-## 📦 Install
+## 🧭 Vision
+
+Windows remembers everything you do and tells Microsoft a good deal of it, and undoing that means
+knowing which of several hundred registry keys, services, scheduled tasks, appx packages and cache
+folders is the one that matters. This script is that knowledge written down and made runnable: one
+batch file, no installer, no cleaner suite of its own to trust.
+
+It is deliberately a single readable artifact rather than a tool. Every step announces what it is
+doing and skips what is not there, so the file can be read before it is run — which matters for
+something this destructive, and is the whole reason it is not a binary.
+
+## ✨ Features
+
+- **Silences telemetry and data collection** — Windows Error Reporting, Customer Experience Improvement Program, Application Experience tasks, Defender SpyNet reporting and sample submission, Windows Tips/Spotlight/consumer features
+- **Blocks Microsoft account logons** and setting synchronization, and encrypts the paging file so swapped-out secrets stay secret
+- **Removes bloatware** — Edge / Internet Explorer (executables get neutralized too), Cortana (including a firewall block for SearchUI), Maps, Sticky Notes, Bing apps, Get Help / Contact Support, Hello Face, Biometrics, Geolocation, Quick Assist, Retail Demo and Troubleshooting packages
+- **Disables the search indexer** and a pile of unneeded scheduled tasks
+- **Wipes usage traces** for **every** user profile — temp folders, crash dumps, prefetch files, recent files, jumplists, Office MRUs, typed addresses, Run dialog history, Visual Studio MRU lists, recycle bins on all drives, all event logs and the icon caches
+- Optional: re-enable the commented-out CCleaner step if `CCleaner\CCleaner.exe` sits in the parent folder
+
+## 📦 Installation
 
 Download `DeleteTraces.bat` from the [latest release](https://github.com/Hawkynt/DeleteMSWindowsTraces/releases/latest) (or a [nightly](https://github.com/Hawkynt/DeleteMSWindowsTraces/releases)), or clone the repository. Place `install_wim_tweak.exe` in the folder **above** the script — the script aborts safely when it is missing.
 
-## 🚀 Usage
+## 🚀 Quick start
 
 Run from an elevated command prompt (registry, services and scheduled tasks are modified):
 
@@ -34,15 +54,6 @@ DeleteTraces.bat
 Every action announces itself with an `[Info]` line; anything not present on your system is skipped.
 
 **Warning** — this script is intentionally destructive: it permanently deletes temp files, MRU lists, recycle bin contents and **all event logs**, removes Windows components that are hard to get back without reinstalling, restarts `explorer.exe` to flush the icon caches, and encrypting the paging file requires a reboot to take effect. Run it on systems you own and understand; there is no undo.
-
-## ✨ Features
-
-- **Silences telemetry and data collection** — Windows Error Reporting, Customer Experience Improvement Program, Application Experience tasks, Defender SpyNet reporting and sample submission, Windows Tips/Spotlight/consumer features
-- **Blocks Microsoft account logons** and setting synchronization, and encrypts the paging file so swapped-out secrets stay secret
-- **Removes bloatware** — Edge / Internet Explorer (executables get neutralized too), Cortana (including a firewall block for SearchUI), Maps, Sticky Notes, Bing apps, Get Help / Contact Support, Hello Face, Biometrics, Geolocation, Quick Assist, Retail Demo and Troubleshooting packages
-- **Disables the search indexer** and a pile of unneeded scheduled tasks
-- **Wipes usage traces** for **every** user profile — temp folders, crash dumps, prefetch files, recent files, jumplists, Office MRUs, typed addresses, Run dialog history, Visual Studio MRU lists, recycle bins on all drives, all event logs and the icon caches
-- Optional: re-enable the commented-out CCleaner step if `CCleaner\CCleaner.exe` sits in the parent folder
 
 ## 🛠️ Building
 
